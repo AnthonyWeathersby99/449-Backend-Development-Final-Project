@@ -77,26 +77,178 @@ This project implements a robust backend system for managing cloud service acces
 ## API Documentation
 
 ### Authentication
-- **POST** `/token`: Obtain access token
-  ```bash
-  curl -X POST "http://localhost:8000/token" -d "username=admin&password=password"
-  ```
 
-### Subscription Plans
-- **GET** `/plans/`: List all subscription plans
-- **POST** `/plans/`: Create new plan (Admin only)
-- **PUT** `/plans/{plan_id}`: Update plan (Admin only)
-- **DELETE** `/plans/{plan_id}`: Delete plan (Admin only)
+#### Login for Access Token
+```http
+POST http://127.0.0.1:8000/token
+Content-Type: application/x-www-form-urlencoded
 
-### User Subscriptions
-- **POST** `/subscriptions/{plan_id}`: Subscribe to a plan
-- **GET** `/subscriptions/{user_id}`: View subscription details
-- **GET** `/subscriptions/{user_id}/usage`: Check usage statistics
+username=admin&password=password
+```
+
+### Plan Management
+
+#### List All Plans
+```http
+GET http://127.0.0.1:8000/plans
+Authorization: Bearer admin_token
+```
+
+#### Create New Plan
+```http
+POST http://127.0.0.1:8000/plans
+Authorization: Bearer admin_token
+Content-Type: application/json
+
+{
+    "name": "Basic Plan",
+    "description": "Basic cloud services access",
+    "api_permissions": "storage,compute",
+    "usage_limit": 100
+}
+```
+
+#### Update Plan
+```http
+PUT http://127.0.0.1:8000/plans/1
+Authorization: Bearer admin_token
+Content-Type: application/json
+
+{
+    "name": "Updated Basic Plan",
+    "description": "Updated description",
+    "api_permissions": "storage,compute,database",
+    "usage_limit": 150
+}
+```
+
+#### Delete Plan
+```http
+DELETE http://127.0.0.1:8000/plans/1
+Authorization: Bearer admin_token
+```
+
+### Permission Management
+
+#### List All Permissions
+```http
+GET http://127.0.0.1:8000/permissions
+Authorization: Bearer admin_token
+```
+
+#### Create Permission
+```http
+POST http://127.0.0.1:8000/permissions
+Authorization: Bearer admin_token
+Content-Type: application/json
+
+{
+    "name": "storage_access",
+    "description": "Access to storage API"
+}
+```
+
+#### Update Permission
+```http
+PUT http://127.0.0.1:8000/permissions/1
+Authorization: Bearer admin_token
+Content-Type: application/json
+
+{
+    "name": "updated_storage_access",
+    "description": "Updated storage API access"
+}
+```
+
+#### Delete Permission
+```http
+DELETE http://127.0.0.1:8000/permissions/1
+Authorization: Bearer admin_token
+```
+
+### Subscription Management
+
+#### Subscribe to Plan
+```http
+POST http://127.0.0.1:8000/subscriptions/1
+Authorization: Bearer admin_token
+```
+
+#### View Subscription Details
+```http
+GET http://127.0.0.1:8000/subscriptions/1
+Authorization: Bearer admin_token
+```
+
+#### View Usage Statistics
+```http
+GET http://127.0.0.1:8000/subscriptions/1/usage
+Authorization: Bearer admin_token
+```
+
+#### Modify User's Subscription
+```http
+PUT http://127.0.0.1:8000/subscriptions/1
+Authorization: Bearer admin_token
+Content-Type: application/json
+
+{
+    "plan_id": 2
+}
+```
+
+### Access Control & Usage
+
+#### Check Access Permission
+```http
+GET http://127.0.0.1:8000/access/1/storage
+Authorization: Bearer admin_token
+```
+
+#### Track API Usage
+```http
+POST http://127.0.0.1:8000/usage/1
+Authorization: Bearer admin_token
+Content-Type: application/json
+
+{
+    "api_name": "storage"
+}
+```
 
 ### Cloud Services
-- **GET** `/api/storage`: Access storage service
-- **GET** `/api/compute`: Access compute service
-- **GET** `/api/database`: Access database service
-- **GET** `/api/analytics`: Access analytics service
-- **GET** `/api/ai`: Access AI service
-- **GET** `/api/messaging`: Access messaging service
+
+All cloud service endpoints require the following header:
+```http
+Authorization: Bearer admin_token
+```
+
+#### Storage Service
+```http
+GET http://127.0.0.1:8000/api/storage
+```
+
+#### Compute Service
+```http
+GET http://127.0.0.1:8000/api/compute
+```
+
+#### Database Service
+```http
+GET http://127.0.0.1:8000/api/database
+```
+
+#### Analytics Service
+```http
+GET http://127.0.0.1:8000/api/analytics
+```
+
+#### AI Service
+```http
+GET http://127.0.0.1:8000/api/ai
+```
+
+#### Messaging Service
+```http
+GET http://127.0.0.1:8000/api/messaging
+```
