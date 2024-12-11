@@ -1,6 +1,9 @@
 # 449-Backend-Development-Final-Project
-# Cloud Service Access Management System
-
+## Author
+- **Anthony Weathersby**
+- **Emmanuel Montoya**
+- **Renzo Salosagcol**
+  
 ## Project Overview
 This project is a backend system for managing cloud service access. It allows administrators to create subscription plans, assign permissions, and track usage. The system is built using FastAPI and provides a robust API for managing users, plans, and permissions.
 
@@ -16,19 +19,18 @@ This project is a backend system for managing cloud service access. It allows ad
 - **SQLAlchemy**: ORM for database operations.
 - **SQLite**: Default database for local development (can be swapped for PostgreSQL).
 - **Pydantic**: Data validation and settings management.
-- **Pytest**: Unit testing framework.
 
 ## Installation
 
 ### Prerequisites
 - Python 3.10 or higher
-- Virtual environment setup (optional but recommended)
+- Virtual environment setup
 
 ### Steps
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/your-repository.git
-   cd your-repository
+   git clone [https://github.com/your-username/your-repository.git](https://github.com/AnthonyWeathersby99/449-Backend-Development-Final-Project.git)
+   cd 449-Backend-Development-Final-Project
    ```
 2. Create and activate a virtual environment:
    ```bash
@@ -101,39 +103,6 @@ Include the following header for admin access:
 ```
 Authorization: Bearer admin_token
 ```
-
-## Testing
-
-### Run Tests
-To run the unit tests, use:
-```bash
-pytest tests/
-```
-
-## Directory Structure
-```
-CPSC-449-Final-Project/
-├── app/
-│   ├── __init__.py
-│   ├── main.py
-│   ├── crud.py
-│   ├── models.py
-│   ├── database.py
-│   ├── auth.py
-│   ├── schemas.py
-│   ├── utils.py
-├── tests/
-│   ├── test_main.py
-├── requirements.txt
-├── README.md
-```
-
-## Known Issues
-- Ensure the `Authorization` header is included in all requests requiring authentication.
-- SQLite is used by default. For production, use a more robust database like PostgreSQL.
-
-## License
-This project is licensed under the MIT License.
 
 ## Author
 - **Anthony Weathersby**
