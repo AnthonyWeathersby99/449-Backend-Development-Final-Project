@@ -103,6 +103,3 @@ Include the following header for admin access:
 ```
 Authorization: Bearer admin_token
 ```
-
-## Author
-- **Anthony Weathersby**
