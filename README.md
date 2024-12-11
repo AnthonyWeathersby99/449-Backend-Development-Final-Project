@@ -1,105 +1,102 @@
-# 449-Backend-Development-Final-Project
+# Cloud Service Access Management System
 ## Authors
 - **Anthony Weathersby**
 - **Emmanuel Montoya**
 - **Renzo Salosagcol**
   
 ## Project Overview
-This project is a backend system for managing cloud service access. It allows administrators to create subscription plans, assign permissions, and track usage. The system is built using FastAPI and provides a robust API for managing users, plans, and permissions.
+This project implements a robust backend system for managing cloud service access using FastAPI. It provides comprehensive API endpoints for subscription management, usage tracking, and access control. The system allows administrators to create and manage subscription plans while enabling customers to access various cloud services based on their subscription levels.
 
 ## Features
-- **Subscription Plan Management**: Create, update, and delete subscription plans.
-- **User Management**: Authenticate users and manage their roles (e.g., admin, customer).
-- **Permission Management**: Define and manage API permissions for various subscription plans.
-- **Usage Tracking**: Track usage based on subscription limits.
+- **User Authentication**: Secure JWT-based authentication system with admin and customer roles
+- **Subscription Plan Management**: 
+  - Create, update, and delete subscription plans
+  - Define usage limits and API permissions per plan
+- **Permission Management**: 
+  - Granular control over API access permissions
+  - Dynamic permission assignment to subscription plans
+- **Usage Tracking**: 
+  - Real-time tracking of API usage
+  - Automatic enforcement of usage limits
+- **Cloud Service Simulation**: 
+  - Six mock cloud services (Storage, Compute, Database, Analytics, AI, Messaging)
+  - Service access control based on subscription plans
+- **Admin Dashboard**: Comprehensive management endpoints for administrators
 
 ## Tech Stack
-- **Python**: Core programming language.
-- **FastAPI**: Framework for building the backend API.
-- **SQLAlchemy**: ORM for database operations.
-- **SQLite**: Default database for local development (can be swapped for PostgreSQL).
-- **Pydantic**: Data validation and settings management.
+- **Python 3.10+**: Core programming language
+- **FastAPI**: High-performance web framework for building APIs
+- **SQLAlchemy**: SQL toolkit and ORM
+- **Pydantic**: Data validation using Python type annotations
+- **SQLite**: Database (can be easily switched to other SQL databases)
+- **uvicorn**: ASGI server implementation
+- **python-jose**: JWT token handling
+- **passlib**: Password hashing
+- **python-multipart**: Form data parsing
 
 ## Installation
 
 ### Prerequisites
 - Python 3.10 or higher
-- Virtual environment setup
+- pip package manager
+- Virtual environment
 
-### Steps
+### Setup
 1. Clone the repository:
    ```bash
-   git clone [https://github.com/your-username/your-repository.git](https://github.com/AnthonyWeathersby99/449-Backend-Development-Final-Project.git)
+   git clone https://github.com/AnthonyWeathersby99/449-Backend-Development-Final-Project.git
    cd 449-Backend-Development-Final-Project
    ```
-2. Create and activate a virtual environment:
+
+2. Create and activate virtual environment:
    ```bash
-   python3 -m venv venv
-   source venv/bin/activate   # On Linux/Mac
-   venv\Scripts\activate    # On Windows
+   python -m venv venv
+   source venv/bin/activate  # Linux/Mac
+   .\venv\Scripts\activate   # Windows
    ```
+
 3. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
-4. Set up the database (SQLite by default):
+
+4. Initialize the database:
    ```bash
    python -c "from app.database import Base, engine; Base.metadata.create_all(bind=engine)"
    ```
-5. Run the application:
+
+## Running the Application
+1. Start the server:
    ```bash
    uvicorn app.main:app --reload
    ```
 
-## Usage
+2. Access the API documentation:
+   - Swagger UI: http://127.0.0.1:8000/docs
 
-### Access the API
-Once the server is running, the API can be accessed at:
-- **Swagger UI**: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
-- **ReDoc**: [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc)
+## API Documentation
 
-### Endpoints
-Here are some key endpoints available:
-
-#### Create a Subscription Plan
-- **POST** `/plans/`
-- **Request Body**:
-  ```json
-  {
-    "name": "Basic Plan",
-    "description": "Basic subscription plan",
-    "api_permissions": "service1",
-    "usage_limit": 100
-  }
-  ```
-- **Response**:
-  ```json
-  {
-    "id": 1,
-    "name": "Basic Plan",
-    "description": "Basic subscription plan",
-    "api_permissions": "service1",
-    "usage_limit": 100
-  }
+### Authentication
+- **POST** `/token`: Obtain access token
+  ```bash
+  curl -X POST "http://localhost:8000/token" -d "username=admin&password=password"
   ```
 
-#### Update a Subscription Plan
-- **PUT** `/plans/{plan_id}`
-- **Request Body**:
-  ```json
-  {
-    "name": "Updated Plan",
-    "description": "Updated subscription plan",
-    "api_permissions": "service1,service2",
-    "usage_limit": 150
-  }
-  ```
+### Subscription Plans
+- **GET** `/plans/`: List all subscription plans
+- **POST** `/plans/`: Create new plan (Admin only)
+- **PUT** `/plans/{plan_id}`: Update plan (Admin only)
+- **DELETE** `/plans/{plan_id}`: Delete plan (Admin only)
 
-#### Delete a Subscription Plan
-- **DELETE** `/plans/{plan_id}`
+### User Subscriptions
+- **POST** `/subscriptions/{plan_id}`: Subscribe to a plan
+- **GET** `/subscriptions/{user_id}`: View subscription details
+- **GET** `/subscriptions/{user_id}/usage`: Check usage statistics
 
-#### Authentication
-Include the following header for admin access:
-```
-Authorization: Bearer admin_token
-```
+### Cloud Services
+- **GET** `/api/storage`: Access storage service
+- **GET** `/api/compute`: Access compute service
+- **GET** `/api/database`: Access database service
+- **GET** `/api/analytics`: Access analytics service
+- **GET** `/api/ai`: Access AI service
+- **GET** `/api/messaging`: Access messaging service
