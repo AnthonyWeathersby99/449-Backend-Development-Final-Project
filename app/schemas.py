@@ -12,10 +12,10 @@ class PlanCreate(PlanBase):
 
 
 class PlanUpdate(BaseModel):
-    name: Optional[str]
-    description: Optional[str]
-    api_permissions: Optional[str]
-    usage_limit: Optional[int]
+    name: Optional[str] = None
+    description: Optional[str] = None
+    api_permissions: Optional[str] = None
+    usage_limit: Optional[int] = None
 
 class Plan(PlanBase):
     id: int

@@ -1,7 +1,7 @@
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
+from datetime import datetime
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from .database import Base
-
 
 class Plan(Base):
     __tablename__ = "plans"
@@ -19,6 +19,7 @@ class User(Base):
     is_admin = Column(Boolean, default=False)
     subscription_plan_id = Column(Integer, ForeignKey('plans.id'))
     subscription_plan = relationship("Plan")
+    usage_count = Column(Integer, default=0)
 
 class Permission(Base):
     __tablename__ = "permissions"
