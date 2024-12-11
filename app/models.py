@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
-from .database import Base  # Changed to relative import
+from .database import Base
+
 
 class Plan(Base):
     __tablename__ = "plans"
@@ -18,3 +19,10 @@ class User(Base):
     is_admin = Column(Boolean, default=False)
     subscription_plan_id = Column(Integer, ForeignKey('plans.id'))
     subscription_plan = relationship("Plan")
+
+class Permission(Base):
+    __tablename__ = "permissions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, unique=True, index=True, nullable=False)
+    description = Column(String, nullable=True)

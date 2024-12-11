@@ -5,7 +5,7 @@ from . import models, database
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-def get_current_admin(token: str = Depends(oauth2_scheme), db: Session = Depends(database.SessionLocal)):
+def get_current_admin(token: str = Depends(oauth2_scheme), db: Session = Depends(database.get_session_local)):
     print(f"Received Token: {token}")
 
     # For testing, use this simplified version
