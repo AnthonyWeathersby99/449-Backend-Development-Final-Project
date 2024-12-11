@@ -1,5 +1,5 @@
 # 449-Backend-Development-Final-Project
-## Author
+## Authors
 - **Anthony Weathersby**
 - **Emmanuel Montoya**
 - **Renzo Salosagcol**
