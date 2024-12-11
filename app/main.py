@@ -224,7 +224,7 @@ async def view_usage_statistics(
 @app.put("/subscriptions/{user_id}")
 async def modify_user_subscription(
     user_id: int,
-    plan_id: int,
+    plan: schemas.SubscriptionUpdate,
     db: Session = Depends(database.get_session_local),
     current_user: models.User = Depends(get_current_admin)
 ):
@@ -233,11 +233,11 @@ async def modify_user_subscription(
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
-    plan = crud.get_plan(db, plan_id)
-    if not plan:
+    new_plan = crud.get_plan(db, plan.plan_id)
+    if not new_plan:
         raise HTTPException(status_code=404, detail="Plan not found")
 
-    user.subscription_plan_id = plan_id
+    user.subscription_plan_id = plan.plan_id
     db.commit()
     return {"message": "Subscription updated successfully"}
 
@@ -265,7 +265,7 @@ async def check_access_permission(
 @app.post("/usage/{user_id}")
 async def track_api_usage(
     user_id: int,
-    api_name: str,
+    usage: schemas.UsageCreate,
     db: Session = Depends(database.get_session_local)
 ):
     """Track API usage for a user"""
@@ -273,10 +273,22 @@ async def track_api_usage(
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
+    if not user.subscription_plan:
+        raise HTTPException(status_code=403, detail="No active subscription")
+
+    # Check if API is allowed in user's plan
+    allowed_apis = user.subscription_plan.api_permissions.split(',')
+    if usage.api_name not in allowed_apis:
+        raise HTTPException(status_code=403, detail="API not included in subscription plan")
+
     user.usage_count += 1
     db.commit()
 
-    return {"current_usage": user.usage_count}
+    return {
+        "current_usage": user.usage_count,
+        "api_name": usage.api_name,
+        "usage_limit": user.subscription_plan.usage_limit
+    }
 
 @app.get("/api/database")
 async def database_service(

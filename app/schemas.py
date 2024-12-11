@@ -38,3 +38,9 @@ class Permission(PermissionBase):
 
     class Config:
         from_attributes = True
+
+class SubscriptionUpdate(BaseModel):
+    plan_id: int
+
+class UsageCreate(BaseModel):
+    api_name: str
