@@ -34,7 +34,7 @@ This project is a backend system for managing cloud service access. It allows ad
    ```
 2. Create and activate a virtual environment:
    ```bash
-   python -m venv venv
+   python3 -m venv venv
    source venv/bin/activate   # On Linux/Mac
    venv\Scripts\activate    # On Windows
    ```
