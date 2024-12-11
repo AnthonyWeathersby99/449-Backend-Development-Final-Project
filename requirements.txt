@@ -2,6 +2,9 @@ fastapi
 uvicorn
 sqlalchemy
 pydantic
+python-jose
+passlib
+python-multipart
 pytest
-requests
 httpx
+requests
